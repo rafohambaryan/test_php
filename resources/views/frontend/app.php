@@ -9,6 +9,6 @@
     <h2><?= $this->file; ?> view not fount</h2>
 <?php endif; ?>
 <?php require_once VIEWS . "{$this->permission}components/footer.php" ?>
-<?php require_once VIEWS . "{$this->permission}components/script.php" ?>
+<?= $this->javascript ?>
 </body>
 </html>

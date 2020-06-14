@@ -6,42 +6,39 @@ namespace app\controllers\app\Components;
 
 trait Assets
 {
+    private $javascript = '';
+    private $css = '';
+
+    public function __construct()
+    {
+        $this->recursion(ROOT . 'public/assets/css');
+        $this->recursion(ROOT . 'public/assets/js');
+        $this->recursion(ROOT . 'public/' . $this->permission . 'css');
+        $this->recursion(ROOT . 'public/' . $this->permission . 'js');
+    }
+
     private function asset($url)
     {
         $url = trim($url, '/');
         return $this->public . $url;
     }
 
-    private function css($url)
+    private function recursion($dir): void
     {
-        $url = trim($url, '/');
-        if (file_exists(ROOT . "public/{$this->permission}{$url}")) {
-            return <<<HTML
-                        <link rel="stylesheet" href="$this->public$url" type="text/css">
-                      HTML;
+        $recurse = glob($dir . '/*');
+        foreach ($recurse as $index => $item) {
+            if (is_dir($item)) {
+                $this->recursion($item);
+            } else {
+                switch (pathinfo($item, PATHINFO_EXTENSION)) {
+                    case 'js':
+                        $this->javascript .= "<script src='" . PUBLIC_PATH . @end(@preg_split('/\/public\//', $item)) . "'></script>";
+                        break;
+                    case 'css':
+                        $this->css .= "<link rel='stylesheet' href='" . PUBLIC_PATH . @end(@preg_split('/\/public\//', $item)) . "'/>";
+                        break;
+                }
+            }
         }
-        return $this->not_fount($this->public . $url, 'css');
     }
-
-    private function js($url)
-    {
-        $url = trim($url, '/');
-        if (file_exists(ROOT . "public/{$this->permission}{$url}")) {
-            return <<<HTML
-                        <script src="$this->public$url" type="text/javascript"></script>
-                      HTML;
-        }
-        return $this->not_fount($this->public . $url, 'js');
-
-    }
-
-    private function not_fount($url, $ext)
-    {
-        return <<<HTML
-                     <script type="text/javascript">
-                         console.error('error 404 $ext file not fount: $url')
-                     </script>
-                  HTML;
-    }
-
 }

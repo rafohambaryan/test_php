@@ -1,4 +1,5 @@
 <?php
+
 spl_autoload_register(function ($class_name) {
     if (file_exists(ROOT . "$class_name.php")) {
         require_once ROOT . "{$class_name}.php";
@@ -7,5 +8,7 @@ spl_autoload_register(function ($class_name) {
         die;
     }
 });
+
 use app\core\Route;
+
 new Route();

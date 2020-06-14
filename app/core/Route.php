@@ -5,7 +5,6 @@ namespace app\core;
 
 use app\core\App;
 
-
 class Route
 {
     private $PARAM = [];
@@ -28,10 +27,10 @@ class Route
                         if (count($myRoute) === count($clientRoute)) {
                             $newPath = '';
                             for ($i = 0, $j = 0; $i < count($myRoute), $j < count($clientRoute); $i++, $j++) {
-                                if ($myRoute[$i] !== '{param}' AND $myRoute[$i] === $clientRoute[$j]) {
+                                if ($myRoute[$i] !== '{param}' and $myRoute[$i] === $clientRoute[$j]) {
                                     $isParam = true;
                                     $newPath .= '/' . $clientRoute[$j];
-                                } else if ($myRoute[$i] === '{param}' AND $myRoute[$i] !== $clientRoute[$j]) {
+                                } else if ($myRoute[$i] === '{param}' and $myRoute[$i] !== $clientRoute[$j]) {
                                     $isParam = true;
                                     $newPath .= '/' . $clientRoute[$j];
                                     array_push($this->PARAM, $clientRoute[$j]);
@@ -45,7 +44,7 @@ class Route
                             }
                         }
                     }
-                    if (count($content) === 2 AND $_URL === $i) {
+                    if (count($content) === 2 and $_URL === $i) {
                         $this->DATA['controller'] = $content[0];
                         $this->DATA['method'] = $content[1] . '_' . strtolower(METHOD);
                         goto init;
@@ -57,7 +56,7 @@ class Route
         $this->initError();
     }
 
-    private function appendRequest()
+    private function appendRequest(): string
     {
         if (METHOD !== 'GET') {
             $request = json_decode(file_get_contents('php://input', FILE_USE_INCLUDE_PATH), true);
@@ -71,19 +70,18 @@ class Route
         if (preg_match('/[?]/', $_URL)) {
             $_URL = preg_split('/[?]/', $_URL)[0];
         }
-        return $_URL;
+        return (string)$_URL;
     }
 
-    private function initError()
+    private function initError():void
     {
         if (empty($this->DATA)) {
             $this->DATA['controller'] = 'ErrorController';
             $this->DATA['method'] = 'index';
         }
-        $this->run();
     }
 
-    private function run()
+    public function __destruct()
     {
         $get = new App($this->DATA['controller'], $this->DATA['method'], $this->PARAM);
         if ($get->page_404) {

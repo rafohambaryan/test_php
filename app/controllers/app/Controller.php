@@ -8,5 +8,5 @@ use app\controllers\app\Components\Model as Model;
 
 class Controller
 {
-    use Assets, Views, Model;
+    use Views, Model , Assets;
 }

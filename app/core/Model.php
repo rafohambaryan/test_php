@@ -11,6 +11,21 @@ class Model extends Connect
 {
     protected $table;
 
+    public  function createDb($sql)
+    {
+        if (empty($sql))
+            return false;
+        // Connect to the database
+        $db = $this->conn;
+        $stmt = $db->prepare($sql);
+        if ($stmt->execute()) {
+            return true;
+        }
+
+        return false;
+    }
+
+
     public function all()
     {
         return $this->select("SELECT * FROM {$this->table}");

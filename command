@@ -9,7 +9,7 @@ class Command
             if ($index === 0 && $item === 'command') {
                 continue 1;
             } else if ($index === 1 && ($item === 'migrate:run' || $item === 'migrate:down')) {
-                $this->migrate(end(explode(':', $item)));
+                $this->migrate(end(@explode(':', $item)));
             } else if ($index === 1 && $item === 'migrate:refresh') {
                 $this->migrate('down');
                 $this->migrate('run');
@@ -21,17 +21,19 @@ class Command
         }
     }
 
+    private $sql = '';
+
     private function migrate($command)
     {
         foreach (glob(__DIR__ . '\\app\\database\\migrations\\*.php') as $item) {
             if (file_exists($item)) {
                 require_once $item;
                 $class = pathinfo($item, PATHINFO_FILENAME);
-                new $class($command);
-
-
+                $this->sql .= (new $class($command))->sql;
             }
         }
+        $db = new \app\core\Model();
+        $db->createDb($this->sql);
 
     }
 }

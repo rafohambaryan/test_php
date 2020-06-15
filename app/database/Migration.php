@@ -2,10 +2,13 @@
 
 namespace app\database;
 
+use app\core\Model;
+
 class Migration
 {
     protected $table;
     protected $run;
+    public $sql = '';
 
     public function __construct($command)
     {
@@ -21,13 +24,13 @@ class Migration
 
     protected function runMigrate()
     {
-        $sql = "CREATE TABLE IF NOT EXISTS {$this->table}({$this->run}) ENGINE InnoDB";
-        var_dump($sql);
+        $sql = "CREATE TABLE IF NOT EXISTS {$this->table}({$this->run}) ENGINE InnoDB;";
+        $this->sql .= $sql;
     }
 
     protected function downMigrate()
     {
-        $sql = "DROP TABLE IF NOT EXISTS {$this->table}";
-        var_dump($sql);
+        $sql = "DROP TABLE IF EXISTS {$this->table};";
+        $this->sql .= $sql;
     }
 }

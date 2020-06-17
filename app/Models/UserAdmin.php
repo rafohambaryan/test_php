@@ -5,7 +5,7 @@ namespace app\Models;
 use app\core\Model;
 use app\core\StaticModelTrait;
 
-class User extends Model 
+class UserAdmin extends Model 
 { 
     use StaticModelTrait;
 }

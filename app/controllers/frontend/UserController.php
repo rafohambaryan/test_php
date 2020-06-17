@@ -10,7 +10,8 @@ class UserController extends FrontController
     public function index_get()
     {
         $this->title = 'aaa';
-
+        $model = new \app\Models\UserAdmin();
+       var_dump($model->all());
         return $this->view('index');
     }
 

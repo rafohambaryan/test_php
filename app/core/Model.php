@@ -11,7 +11,7 @@ class Model extends Connect
 {
     protected $table;
 
-    public  function createDb($sql)
+    public function createDb($sql)
     {
         if (empty($sql))
             return false;
@@ -24,7 +24,6 @@ class Model extends Connect
 
         return false;
     }
-
 
     public function all()
     {

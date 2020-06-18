@@ -7,8 +7,10 @@ namespace app\core;
 use app\database\Connect;
 use PDO;
 
-class Model extends Connect
+class Model
 {
+    use Connect;
+
     protected $table;
 
     public function createDb($sql)
@@ -16,7 +18,7 @@ class Model extends Connect
         if (empty($sql))
             return false;
         // Connect to the database
-        $db = $this->conn;
+        $db = self::conn();
         $stmt = $db->prepare($sql);
         if ($stmt->execute()) {
             return true;
@@ -35,7 +37,7 @@ class Model extends Connect
         return current($this->select("SELECT * FROM {$this->table} WHERE `id` = {$id}"));
     }
 
-    public function create($data)
+    public function created($data)
     {
         return $this->insert($this->table, $data);
     }
@@ -57,19 +59,25 @@ class Model extends Connect
 
     private function select($query)
     {
-        $db = $this->conn;
+        $db = self::conn();
         $stmt = $db->prepare($query);
         $stmt->execute();
         $results = [];
         if ($stmt->rowCount() > 0) {
             while ($row = $stmt->fetchObject()) {
+                $row->{'app'} = $this;
                 $results[] = $row;
             }
         }
         return $results;
     }
 
-    private function insert($table, $data)
+    public function save($user)
+    {
+        return $user;
+    }
+
+    private function insert($table, $data, $func = 'INSERT INTO')
     {
         $key = '';
         $value = '';
@@ -79,7 +87,7 @@ class Model extends Connect
         }
         $key = substr($key, 0, -1);
         $value = substr($value, 0, -1);
-        $conn = $this->conn;
+        $conn = self::conn();
         $sql_insert = $conn->prepare("INSERT INTO {$table} ({$key}) VALUES ({$value});");
         foreach ($data as $item => $val) {
             $sql_insert->bindValue(':' . $item, $val);

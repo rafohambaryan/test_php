@@ -5,30 +5,28 @@ namespace app\database;
 use PDO;
 use PDOException;
 
-class Connect
+trait Connect
 {
-    public $conn;
-    private $db_host;
-    private $db_user;
-    private $db_base;
-    private $db_password;
+    private static $conn;
 
-    public function __construct()
+    private function conn()
     {
-        $connect = require_once __DIR__. '/config.php';
-        $this->db_host = $connect['db_host'];
-        $this->db_user = $connect['db_user'];
-        $this->db_base = $connect['db_base'];
-        $this->db_password = $connect['db_password'];
-        $this->connect();
+        self::$conn ?: $this->connect();
+        return self::$conn;
     }
 
     private function connect()
     {
+        $connect = require_once __DIR__ . '/config.php';
+        $db_host = $connect['db_host'];
+        $db_user = $connect['db_user'];
+        $db_base = $connect['db_base'];
+        $db_password = $connect['db_password'];
+
         try {
-            $conn = new PDO("mysql:host=$this->db_host;dbname=$this->db_base", $this->db_user, $this->db_password);
+            $conn = new PDO("mysql:host=$db_host;dbname=$db_base", $db_user, $db_password);
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            $this->conn = $conn;
+            self::$conn = $conn;
         } catch (PDOException $e) {
             echo $e->getMessage();
             die;

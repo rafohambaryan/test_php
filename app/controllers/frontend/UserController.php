@@ -10,8 +10,13 @@ class UserController extends FrontController
     public function index_get()
     {
         $this->title = 'aaa';
-        $model = new \app\Models\UserAdmin();
-       var_dump($model->all());
+//        \app\Models\UserAdmin::create([
+//            'name' => 'sdf'
+//        ]);
+        $user = \app\Models\UserAdmin::findOne(1);
+        $user->name = 123;
+        echo "<pre>";
+        var_dump($user->app->save($user));
         return $this->view('index');
     }
 

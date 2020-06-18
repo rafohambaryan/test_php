@@ -10,7 +10,6 @@ trait StaticModelTrait
 
     public function __construct()
     {
-        parent::__construct();
         $table = explode('\\', __CLASS__);
         $tableName = strtolower(trim(join(preg_split('/(?=[A-Z])/', end($table)), '_'), '_')) . 's';
         $this->table = $tableName;
@@ -31,5 +30,10 @@ trait StaticModelTrait
     public static function findOne($id)
     {
         return (new self)->find($id);
+    }
+
+    public static function create($data)
+    {
+        return (new self)->created($data);
     }
 }

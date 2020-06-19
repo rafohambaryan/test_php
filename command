@@ -44,8 +44,8 @@ class Command
                 $class = pathinfo($item, PATHINFO_FILENAME);
                 $class = explode('_', $class);
                 array_shift($class);
-                $class = implode($class,'_');
-                $this->sql .= (new $class($command))->sql;
+                $class = implode($class, '_');
+                $this->sql .= (new $class($command, str_replace('migration_create_','',$class)))->sql;
             }
         }
         $db = new \app\core\Model();
@@ -59,7 +59,6 @@ class Command
         $tableName = strtolower(trim(join(preg_split('/(?=[A-Z])/', $model), '_'), '_')) . 's';
         $migrateClassName = "migration_create_{$tableName}";
         $newFileMigrate = __DIR__ . "/app/database/migrations/" . time() . "_{$migrateClassName}.php";
-        $tableVar = '$table';
         $runVar = '$run';
         $defaultSql = '`id`         INT(11)      NOT NULL AUTO_INCREMENT PRIMARY KEY,
                       `name`       VARCHAR(255) NULL,
@@ -71,7 +70,7 @@ class Command
             fclose($fileModel);
             @touch($newFileMigrate);
             $fileMigrate = fopen($newFileMigrate, 'r+');
-            fwrite($fileMigrate, "<?php\n\nuse app\database\Migration;\n\nclass {$migrateClassName} extends Migration \n{ \n    protected $tableVar = '{$tableName}';\n \n    protected $runVar = '{$defaultSql}';\n}");
+            fwrite($fileMigrate, "<?php\n\nuse app\database\Migration;\n\nclass {$migrateClassName} extends Migration \n{ \n    protected $runVar = '{$defaultSql}';\n}");
             fclose($fileMigrate);
         }
     }

@@ -10,14 +10,17 @@ class Migration
     protected $run;
     public $sql = '';
 
-    public function __construct($command)
+    public function __construct($command, $table)
     {
+        $this->table ?: $this->table = $table;
         switch ($command) {
             case 'run':
                 $this->runMigrate();
+                echo "create [$this->table] table\n";
                 break;
             case 'down':
                 $this->downMigrate();
+                echo "drop [$this->table] tablen\n";
                 break;
         }
     }

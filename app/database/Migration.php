@@ -20,7 +20,7 @@ class Migration
                 break;
             case 'down':
                 $this->downMigrate();
-                echo "drop [$this->table] tablen\n";
+                echo "drop [$this->table] table\n";
                 break;
         }
     }

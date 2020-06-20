@@ -6,6 +6,8 @@ namespace app\controllers\app\Components;
 
 trait Views
 {
+    protected $layout = 'app';
+
     protected $permission;
 
     private $file;
@@ -21,7 +23,7 @@ trait Views
         $this->public = PUBLIC_PATH . $this->permission;
         $this->file = $file;
         $this->data = $data;
-        return @require_once VIEWS . $this->permission . 'app.php';
+        return @require_once VIEWS . $this->permission . $this->layout . PHP;
     }
 
     protected function back($url = null)

@@ -1,10 +1,11 @@
 <?php
 
 spl_autoload_register(function ($class_name) {
-    if (file_exists(ROOT . "$class_name.php")) {
-        require_once ROOT . "{$class_name}.php";
+    $url = str_replace('\\', '/', ROOT . $class_name . '.php');
+    if (file_exists($url)) {
+        require_once $url;
     } else {
-        echo "$class_name.php Class does not exist";
+        echo "$url Class does not exist";
         die;
     }
 });

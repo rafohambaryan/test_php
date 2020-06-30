@@ -1,12 +1,12 @@
 <?php
 
-use app\controllers\app\FrontController;
+use app\controllers\app\ErrorController as Error;
 
-class ErrorController extends FrontController
+class ErrorController extends Error
 {
     public function index()
     {
         $this->title = 'error';
-        return $this->view('error');
+        return $this->view('error-404');
     }
 }

@@ -1,1 +1,2 @@
-<h2>Header</h2>
+<?php
+return '<h2>Header</h2>';

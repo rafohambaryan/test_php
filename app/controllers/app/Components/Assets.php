@@ -52,7 +52,7 @@ trait Assets
             } else {
                 switch (pathinfo($item, PATHINFO_EXTENSION)) {
                     case 'js':
-                        $this->javascript .= "<script src='" . PUBLIC_PATH . @end(@preg_split('/\/public\//', $item)) . "'></script>";
+                        $this->javascript .= "<script src='" . PUBLIC_PATH . @end(@preg_split('/\/public\//', $item)) . "' type='text/javascript'></script>";
                         break;
                     case 'css':
                         $this->css .= "<link rel='stylesheet' href='" . PUBLIC_PATH . @end(@preg_split('/\/public\//', $item)) . "'/>";

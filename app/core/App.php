@@ -64,10 +64,32 @@ class App
                 if (isset($headers['Data-Ajax'])) {
                     $data = str_replace('\\', '', $data);
                     $data = preg_split('/<body>|<\/body>/', html_entity_decode($data));
-
                     $title = preg_split('/<title>|<\/title>/', html_entity_decode(htmlentities($data[0])))[1];
+                    $data = $data[1];
+                    $replace = [
+                        '%S' => 'section',
+                        '%Q' => 'data-href',
+                        '%H' => 'href',
+                        '%C' => 'class',
+                        '%N' => 'nav',
+                        '%B' => 'button',
+                        '%V' => 'container',
+                        '%D' => 'div',
+                        '%T' => 'type',
+                        '%P' => 'span',
+                        '%I' => 'input',
+                        '%L' => 'select',
+                        '%K' => 'data-id',
+                        '%O' => 'path',
+                    ];
+                    foreach ($replace as $index => $item) {
+                        $data = str_replace($item, $index, html_entity_decode(htmlentities($data)));
+                    }
 
-                    echo json_encode(base64_encode(json_encode(['data' => $data[1], 'title' => $title])));
+                    $data = str_replace(PUBLIC_PATH, '%URL', html_entity_decode(htmlentities($data)));
+                    $data = str_replace('  ', '', html_entity_decode(htmlentities($data)));
+
+                    echo json_encode(base64_encode(json_encode(['data' => $data, 'title' => $title])));
                     die;
                 } else {
                     echo html_entity_decode($data);

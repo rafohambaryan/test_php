@@ -6,6 +6,7 @@ return [
     '/skills' => 'frontend\UserController@skills',
     '/interests' => 'frontend\UserController@interests',
     '/awards' => 'frontend\UserController@awards',
+    '/contact' => 'frontend\UserController@contact',
 
 //    '/admin' => 'backend\AdminController@index',
 ];

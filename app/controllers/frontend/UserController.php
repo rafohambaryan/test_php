@@ -38,6 +38,11 @@ class UserController extends FrontController
         $this->title = 'aaa';
         return $this->view('awards');
     }
+    public function contact_get()
+    {
+        $this->title = 'contact';
+        return $this->view('contact');
+    }
 
     public function index_post()
     {

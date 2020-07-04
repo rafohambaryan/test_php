@@ -14,5 +14,6 @@
     <orderEntry type="library" name="jquery-easing" level="application" />
     <orderEntry type="library" name="bootstrap.bundle" level="application" />
     <orderEntry type="library" name="jquery-popup-overlay" level="application" />
+    <orderEntry type="library" name="jquery.mobile-1.4.5" level="application" />
   </component>
 </module>

@@ -14,6 +14,7 @@ return '<nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id
                     <li class="nav-item"><a class="nav-link js-scroll-trigger" data-href="' . $origin . 'skills">Skills</a></li>
                     <li class="nav-item"><a class="nav-link js-scroll-trigger" data-href="' . $origin . 'interests">Interests</a></li>
                     <li class="nav-item"><a class="nav-link js-scroll-trigger" data-href="' . $origin . 'awards">Awards</a></li>
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger" data-href="' . $origin . 'contact">Contact</a></li>
                 </ul>
             </div>
         </nav>';

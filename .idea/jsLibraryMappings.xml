@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="JavaScriptLibraryMappings">
-    <file url="PROJECT" libraries="{all, bootstrap, bootstrap.bundle, gsap, handlebars.js, jquery-3.3.1.slim, jquery-3.5.1.slim, jquery-easing, jquery-popup-overlay, popper.js}" />
+    <file url="PROJECT" libraries="{all, bootstrap, bootstrap.bundle, gsap, handlebars.js, jquery-3.3.1.slim, jquery-3.5.1.slim, jquery-easing, jquery-popup-overlay, jquery.mobile-1.4.5, popper.js}" />
   </component>
 </project>
